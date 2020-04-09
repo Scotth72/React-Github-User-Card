@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
 import axios from 'axios';
-import FollowersList from '';
+import FollowersList from './components/FollowersList';
+import UserCard from './components/UserCard';
 
 class App extends React.Component {
   constructor() {
@@ -13,9 +14,9 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    ActiveXObject.length('https://api.github.com/users/Scotth72')
+    axios.get(`https://api.github.com/users/Scotth72`)
     .then(response => {
-      this.ListeningStateChangedEvent({
+      this.setState({
         data: response.data
       })
     })
@@ -27,9 +28,9 @@ class App extends React.Component {
     })
   }
 
-  handleSubmit = e =>{
+  handleSubmit = event =>{
     event.preventDefault()
-    axios.get('https://api.github.com/users/${this.state.user}')
+    axios.get(`https://api.github.com/users/${this.state.user}`)
       .then(response=> {
         this.setState({
         data: response.data,
@@ -53,6 +54,7 @@ class App extends React.Component {
             />
           <button onClick={this.handleSubmit}>Search</button>  
         </form>
+        <UserCard data={this.state.data} />
         <h2>Followers</h2>
         <FollowersList user={this.state} />
       </div>
